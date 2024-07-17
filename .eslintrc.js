@@ -18,10 +18,10 @@ module.exports = {
     'prettier'
   ],
   rules: {
-    'prettier/prettier': 'error', // Использование Prettier как правило ESLint
-    'no-unused-vars': 'warn', // Предупреждение об объявленных, но неиспользуемых переменных
-    'prefer-const': 'error', // Предпочтение использования const там, где это возможно
-    'eqeqeq': 'error', // Требование использования === и !== вместо == и !=
+    'prettier/prettier': 'error', 
+    'no-unused-vars': 'warn', 
+    'prefer-const': 'error', 
+    'eqeqeq': 'error', 
     'import/order': [
       'error',
       {
@@ -29,11 +29,11 @@ module.exports = {
         'newlines-between': 'always'
       }
     ],
-    '@typescript-eslint/explicit-function-return-type': 'off', // Отключение обязательного указания типа возвращаемого значения для функций
-    '@typescript-eslint/no-explicit-any': 'warn', // Предупреждение о использовании any
-    '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }], // Игнорирование неиспользуемых аргументов, начинающихся с _
-    'jsdoc/check-alignment': 'error', // Проверка выравнивания JSDoc
-    'jsdoc/check-indentation': 'error', // Проверка отступов в JSDoc
+    '@typescript-eslint/explicit-function-return-type': 'off', 
+    '@typescript-eslint/no-explicit-any': 'warn', 
+    '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }], 
+    'jsdoc/check-alignment': 'error', 
+    'jsdoc/check-indentation': 'error', 
   },
   parserOptions: {
     ecmaVersion: 2021,
