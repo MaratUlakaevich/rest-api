@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import db from '../db';
 import { Book } from '../models/book';
 
@@ -8,7 +9,7 @@ export const addBook = async (req: Request, res: Response) => {
     const newBook: Book = { title, author, publicationDate, genres };
     const result = await db.one(
       `INSERT INTO books (title, author, publicationDate, genres) VALUES ($1, $2, $3, $4) RETURNING *`,
-      [newBook.title, newBook.author, newBook.publicationDate, newBook.genres]
+      [newBook.title, newBook.author, newBook.publicationDate, newBook.genres],
     );
     res.json(result);
   } catch (error: any) {
@@ -47,7 +48,7 @@ export const updateBook = async (req: Request, res: Response) => {
     const updatedBook: Book = { title, author, publicationDate, genres };
     const result = await db.one(
       `UPDATE books SET title = $1, author = $2, publicationDate = $3, genres = $4 WHERE id = $5 RETURNING *`,
-      [updatedBook.title, updatedBook.author, updatedBook.publicationDate, updatedBook.genres, id]
+      [updatedBook.title, updatedBook.author, updatedBook.publicationDate, updatedBook.genres, id],
     );
     res.json(result);
   } catch (error: any) {

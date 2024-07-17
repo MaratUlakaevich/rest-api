@@ -8,9 +8,9 @@ const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email',
   port: 587,
   auth: {
-      user: 'mark.ruecker34@ethereal.email',
-      pass: 'yRuMUTWJbpv43ZE4ap'
-  }
+    user: 'mark.ruecker34@ethereal.email',
+    pass: 'yRuMUTWJbpv43ZE4ap',
+  },
 });
 
 export const sendConfirmationEmail = async (to: string, confirmationCode: string) => {

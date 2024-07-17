@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { addBook, getBooks, getBookById, updateBook, deleteBook } from '../controllers/bookController';
+
+import {
+  addBook,
+  getBooks,
+  getBookById,
+  updateBook,
+  deleteBook,
+} from '../controllers/bookController';
 import { authenticateJWT, authorizeRole } from '../middleware/auth';
 
 const router = Router();

@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { registerUser, confirmEmail, loginUser, getCurrentUser, changeUserRole } from '../controllers/userController';
+
+import {
+  registerUser,
+  confirmEmail,
+  loginUser,
+  getCurrentUser,
+  changeUserRole,
+} from '../controllers/userController';
 import { authenticateJWT, authorizeRole } from '../middleware/auth';
 
 const router = Router();

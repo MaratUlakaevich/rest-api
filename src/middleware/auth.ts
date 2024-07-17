@@ -16,14 +16,12 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
       return res.sendStatus(403);
     }
     req.body.user = user;
-    console.log(req.body.user);
     next();
   });
 };
 
 export const authorizeRole = (role: number) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body.user.role);
     if ((req.body.user.role & role) === role) {
       next();
     } else {

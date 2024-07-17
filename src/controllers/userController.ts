@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+
 import db from '../db';
 import { User } from '../models/user';
 import { sendConfirmationEmail } from '../utils/emailUtils';
@@ -18,7 +19,7 @@ export const registerUser = async (req: Request, res: Response) => {
     // Сохраняем пользователя в базе данных с неподтвержденным email
     const newUser: User = await db.one(
       'INSERT INTO users(username, password, email, role, confirmed, confirmationCode) VALUES($1, $2, $3, $4, $5, $6) RETURNING id, username, email',
-      [username, hashedPassword, email, 0, false, confirmationCode]
+      [username, hashedPassword, email, 0, false, confirmationCode],
     );
 
     // Отправляем письмо с подтверждением
@@ -41,10 +42,10 @@ export const confirmEmail = async (req: Request, res: Response) => {
 
   try {
     // Найдем пользователя по confirmationCode и пометим его как подтвержденного
-    const result = await db.result(
-      'UPDATE users SET confirmed = $1 WHERE confirmationCode = $2',
-      [true, confirmationCode]
-    );
+    const result = await db.result('UPDATE users SET confirmed = $1 WHERE confirmationCode = $2', [
+      true,
+      confirmationCode,
+    ]);
 
     if (result.rowCount === 1) {
       res.status(200).json({ message: 'Email успешно подтвержден' });
@@ -62,11 +63,15 @@ export const loginUser = async (req: Request, res: Response) => {
     const { username, password } = req.body;
     const user = await db.oneOrNone('SELECT * FROM users WHERE username = $1', [username]);
 
-    if (!user || !await bcrypt.compare(password, user.password)) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
 
-    const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+    const token = jwt.sign(
+      { id: user.id, username: user.username, role: user.role },
+      process.env.JWT_SECRET!,
+      { expiresIn: '1h' },
+    );
     res.json({ token });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -88,7 +93,7 @@ export const changeUserRole = async (req: Request, res: Response) => {
     const { role } = req.body;
     const updatedUser = await db.one(
       'UPDATE users SET role = $1 WHERE id = $2 RETURNING id, username, email, role',
-      [role, id]
+      [role, id],
     );
     res.json(updatedUser);
   } catch (error: any) {
